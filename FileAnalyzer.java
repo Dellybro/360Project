@@ -1,11 +1,11 @@
 public class FileAnalyzer {
-    public int lines;
-    public int blankLines;
-    public int spaces;
-    public int words;
-    public int avgCharsPerLine;
-    public int avgWordLength;
-    public int mostCommonWords;
+    private int lines;
+    private int blankLines;
+    private int spaces;
+    private int words;
+    private int avgCharsPerLine;
+    private int avgWordLength;
+    private int mostCommonWords;
     static int totalFiles = 0;
     public FileAnalyzer()
     {
@@ -61,9 +61,16 @@ public class FileAnalyzer {
     {
         avgWordLength = newAvg;
     }
+    public int getAvgWordLength()
+    {
+        return avgWordLength;
+    }
     public void setMostCommonWords(int newCommon)
     {
         mostCommonWords = newCommon;
     }
+    public int getMostCommonWords()
+    {
+        return mostCommonWords;
+    }
 }
-
