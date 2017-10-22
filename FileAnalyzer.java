@@ -19,7 +19,7 @@ public class FileAnalyzer {
         mostCommonWords = 0;
         name = "";
     }
-    public FileAnalyzer(string inputName)
+    public FileAnalyzer(String inputName)
     {
       lines = 0;
       blankLines = 0;
