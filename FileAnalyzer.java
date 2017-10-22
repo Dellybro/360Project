@@ -21,21 +21,41 @@ public class FileAnalyzer {
     {
         lines = newLines;
     }
+    public int getLines()
+    {
+        return lines;
+    }
     public void setBlankLines(int newBlankLines)
     {
         blankLines = newBlankLines;
+    }
+    public int getBlankLines()
+    {
+        return blankLines;
     }
     public void setSpaces(int newSpaces)
     {
         spaces = newSpaces;
     }
+    public int getSpaces()
+    {
+        return spaces;
+    }
     public void setWords(int newWords)
     {
         words = newWords;
     }
+    public int getWords()
+    {
+        return words;
+    }
     public void setAvgCharsPerLine(int newAvg)
     {
         avgCharsPerLine = newAvg;
+    }
+    public int getAvgCharsPerLine()
+    {
+        return avgCharsPerLine;
     }
     public void setAvgWordLength(int newAvg)
     {
