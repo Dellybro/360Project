@@ -6,6 +6,7 @@ public class FileAnalyzer {
     private int avgCharsPerLine;
     private int avgWordLength;
     private int mostCommonWords;
+    private String name;
     static int totalFiles = 0;
     public FileAnalyzer()
     {
@@ -16,6 +17,26 @@ public class FileAnalyzer {
         avgCharsPerLine = 0;
         avgWordLength = 0;
         mostCommonWords = 0;
+        name = "";
+    }
+    public FileAnalyzer(string inputName)
+    {
+      lines = 0;
+      blankLines = 0;
+      spaces = 0;
+      words = 0;
+      avgCharsPerLine = 0;
+      avgWordLength = 0;
+      mostCommonWords = 0;
+      name = inputName;
+    }
+    public void setName(String inputName)
+    {
+      name = inputName;
+    }
+    public String getName()
+    {
+      return name;
     }
     public void setLines(int newLines)
     {
