@@ -1,3 +1,4 @@
+import java.util.PriorityQueue;
 public class FileAnalyzer {
     private int lines;
     private int blankLines;
@@ -5,9 +6,10 @@ public class FileAnalyzer {
     private int words;
     private int avgCharsPerLine;
     private int avgWordLength;
-    private int mostCommonWords;
+    private PriorityQueue<WordTotal> mostCommonWords;
     private String name;
     static int totalFiles = 0;
+    
     public FileAnalyzer()
     {
         lines = 0;
@@ -16,7 +18,7 @@ public class FileAnalyzer {
         words = 0;
         avgCharsPerLine = 0;
         avgWordLength = 0;
-        mostCommonWords = 0;
+        mostCommonWords = null;
         name = "";
     }
     public FileAnalyzer(String inputName)
@@ -27,9 +29,22 @@ public class FileAnalyzer {
       words = 0;
       avgCharsPerLine = 0;
       avgWordLength = 0;
-      mostCommonWords = 0;
+      mostCommonWords = null;
       name = inputName;
     }
+    
+    public FileAnalyzer(int lC, int bC, int sC, int wC, int aCPL, int aWL, PriorityQueue<WordTotal> p, String filename)
+    {
+        lines = lC;
+        blankLines = bC;
+        spaces = sC;
+        words = wC;
+        avgCharsPerLine = aCPL;
+        avgWordLength = aWL;
+        mostCommonWords = p;
+        name = filename;
+    }
+    
     public void setName(String inputName)
     {
       name = inputName;
@@ -86,11 +101,12 @@ public class FileAnalyzer {
     {
         return avgWordLength;
     }
-    public void setMostCommonWords(int newCommon)
+    
+    public void setMostCommonWords(PriorityQueue<WordTotal> p)
     {
-        mostCommonWords = newCommon;
+        mostCommonWords = p;
     }
-    public int getMostCommonWords()
+    public PriorityQueue<WordTotal> getMostCommonWords()
     {
         return mostCommonWords;
     }
