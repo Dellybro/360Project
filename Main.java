@@ -11,8 +11,6 @@ public class Main {
    public static Scanner input = new Scanner(System.in);
 
    public static void main(String[] argv){
-     FileAnalyzer file = new FileAnalyzer();
-     DatabaseHandler.insertRow(file);
    }
 
    public static void showMenu(){

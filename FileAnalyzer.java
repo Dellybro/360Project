@@ -7,6 +7,7 @@ public class FileAnalyzer {
     private int avgWordLength;
     private int mostCommonWords;
     private String name;
+    private String uuid;
     static int totalFiles = 0;
     public FileAnalyzer()
     {
@@ -29,6 +30,12 @@ public class FileAnalyzer {
       avgWordLength = 0;
       mostCommonWords = 0;
       name = inputName;
+    }
+    public void setUUID(String newUuid){
+      uuid = newUuid;
+    }
+    public String getUUID(){
+      return uuid;
     }
     public void setName(String inputName)
     {
