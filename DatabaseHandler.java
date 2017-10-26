@@ -75,7 +75,7 @@ public class DatabaseHandler{
       while ((line = reader.readLine()) != null){
         String[] arrayOfStrings = line.split(",");
         if(arrayOfStrings[0].equals(uuid)){
-          FileAnalyzer file = initFileAnalyzerWithArray(arrayOfStrings);
+          FileAnalyzer file = new FileAnalyzer(arrayOfStrings);
           return file;
         }
       }
@@ -97,7 +97,7 @@ public class DatabaseHandler{
       while ((line = reader.readLine()) != null){
         /**/
         String[] arrayOfStrings = line.split(",");
-        FileAnalyzer currentFile = initFileAnalyzerWithArray(arrayOfStrings);
+        FileAnalyzer currentFile = new FileAnalyzer(arrayOfStrings);
         files.add(currentFile);
       }
 
@@ -107,35 +107,5 @@ public class DatabaseHandler{
       /* Create file try again */
       return null;
     }
-  }
-
-  public static FileAnalyzer initFileAnalyzerWithArray(String[] arrayOfStrings){
-    FileAnalyzer file = new FileAnalyzer(arrayOfStrings[1]);
-    for (int i = 0; i < arrayOfStrings.length; i++) {
-      switch(i){
-        case 0:
-          file.setUUID(arrayOfStrings[i]);
-          break;
-        case 1:
-          file.setName(arrayOfStrings[i]);
-          break;
-        case 2:
-          file.setLines(Integer.parseInt(arrayOfStrings[i]));
-          break;
-        case 3:
-          file.setBlankLines(Integer.parseInt(arrayOfStrings[i]));
-          break;
-        case 4:
-          file.setSpaces(Integer.parseInt(arrayOfStrings[i]));
-          break;
-        case 5:
-          file.setWords(Integer.parseInt(arrayOfStrings[i]));
-          break;
-        default:
-          break;
-      }
-    }
-
-    return file;
   }
 }

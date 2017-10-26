@@ -44,7 +44,33 @@ public class FileAnalyzer {
         mostCommonWords = p;
         name = filename;
     }
-    
+    public FileAnalyzer(String[] arrayOfStrings){
+      for (int i = 0; i < arrayOfStrings.length; i++) {
+        switch(i){
+          case 0:
+            setUUID(arrayOfStrings[i]);
+            break;
+          case 1:
+            setName(arrayOfStrings[i]);
+            break;
+          case 2:
+            setLines(Integer.parseInt(arrayOfStrings[i]));
+            break;
+          case 3:
+            setBlankLines(Integer.parseInt(arrayOfStrings[i]));
+            break;
+          case 4:
+            setSpaces(Integer.parseInt(arrayOfStrings[i]));
+            break;
+          case 5:
+            setWords(Integer.parseInt(arrayOfStrings[i]));
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
     public void setUUID(String newUuid){
       uuid = newUuid;
     }
