@@ -10,7 +10,7 @@ public class FileAnalyzer {
     private String name;
     private String uuid;
     static int totalFiles = 0;
-
+    
     public FileAnalyzer()
     {
         lines = 0;
@@ -33,6 +33,15 @@ public class FileAnalyzer {
       mostCommonWords = null;
       name = inputName;
     }
+<<<<<<< HEAD
+    public void setUUID(String newUuid){
+      uuid = newUuid;
+    }
+    public String getUUID(){
+      return uuid;
+    }
+=======
+    
     public FileAnalyzer(int lC, int bC, int sC, int wC, int aCPL, int aWL, PriorityQueue<WordTotal> p, String filename)
     {
         lines = lC;
@@ -45,13 +54,7 @@ public class FileAnalyzer {
         name = filename;
     }
     
-    public void setUUID(String newUuid){
-      uuid = newUuid;
-    }
-    public String getUUID(){
-      return uuid;
-    }
-
+>>>>>>> 1da4445c653a330a3aaca494b928a8903eb176f9
     public void setName(String inputName)
     {
       name = inputName;
@@ -108,7 +111,7 @@ public class FileAnalyzer {
     {
         return avgWordLength;
     }
-
+    
     public void setMostCommonWords(PriorityQueue<WordTotal> p)
     {
         mostCommonWords = p;
