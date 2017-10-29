@@ -11,6 +11,7 @@ public class Main {
    public static Scanner input = new Scanner(System.in);
 
    public static void main(String[] argv){
+     Graphics.startProgram();
    }
 
    public static void showMenu(){

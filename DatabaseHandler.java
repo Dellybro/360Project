@@ -20,6 +20,7 @@ public class DatabaseHandler{
   public static String filename = "database.txt";
   public static String tempFilename = "databaseTemp.txt";
 
+  /* This function will add FileAnalyzer to the database.txt */
   public static boolean insertRow(FileAnalyzer fileToWrite){
 
     try {
@@ -38,6 +39,7 @@ public class DatabaseHandler{
   	}
   }
 
+  /* This function will remove a FileAnalyzer from database.txt */
   public static boolean removeRow(FileAnalyzer fileToDelete){
 
     try {
@@ -68,6 +70,7 @@ public class DatabaseHandler{
     }
   }
 
+  /* This function queries a row based on uuid from database.txt */
   public static FileAnalyzer getRow(String uuid){
     try {
       BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -88,7 +91,7 @@ public class DatabaseHandler{
     }
   }
 
-
+  /* This function all rows based on uuid from database.txt */
   public static ArrayList<FileAnalyzer> getAllRows() {
     ArrayList<FileAnalyzer> files = new ArrayList<FileAnalyzer>();
     try {
