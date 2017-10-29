@@ -78,14 +78,14 @@ public class FileIO {
 		return new FileAnalyzer(numOfLines, numOfBlankLines, numOfSpaces, numOfWords, averageCharsPerLine, averageWordLength, commonWords, name);
 	}
 	
-	public static File removePunctuation(String name){
+	public static FileAnalyzer removePunctuation(String name){
 		File nf = new File("test.txt");
 		BufferedReader bf;
 		PrintWriter pw;
+		String newFile = "test.txt";
 		try {
 			bf = new BufferedReader(new FileReader(new File(name)));
-			String newFile = "test.txt";
-			pw = new PrintWriter("test"+".txt");
+			pw = new PrintWriter(newFile);
 			String line;
 			while((line = bf.readLine()) != null){
 				for(int i = 0; i < line.length(); i++){
@@ -104,7 +104,7 @@ public class FileIO {
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
-		return nf;
+		return readFile(newFile);
 	}
 	
 }
