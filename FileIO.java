@@ -36,7 +36,7 @@ public class FileIO {
 						}
 						if(leftP == -1 && Character.isLetter(line.charAt(i))){
 							leftP = i;
-						}else if((!Character.isLetter(line.charAt(i))|| i == line.length()-1) && leftP != -1){//reached end of word, add to HashMap
+						}else if(line.charAt(i) != 39 && (!Character.isLetter(line.charAt(i))|| i == line.length()-1) && leftP != -1){//reached end of word, add to HashMap
 							String toAdd;
 							if(i == line.length()-1 && Character.isLetter(line.charAt(i))){
 								toAdd = line.substring(leftP, i+1).toLowerCase(); //Case that word ends the line
@@ -80,10 +80,9 @@ public class FileIO {
 	}
 	
 	public static FileAnalyzer removePunctuation(String name){
-		File nf = new File("test.txt");
 		BufferedReader bf;
 		PrintWriter pw;
-		String newFile = "test.txt";
+		String newFile = "removedPunctuation.txt";
 		try {
 			bf = new BufferedReader(new FileReader(new File(name)));
 			pw = new PrintWriter(newFile);
