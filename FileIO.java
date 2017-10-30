@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class FileIO {
-	
-	
+
+
 	public static FileAnalyzer readFile(String name) {
 		if(name == null) return null;
 		PriorityQueue<WordTotal> commonWords = new PriorityQueue<WordTotal>();
@@ -78,7 +78,7 @@ public class FileIO {
 		}
 		return new FileAnalyzer(numOfLines, numOfBlankLines, numOfSpaces, numOfWords, averageCharsPerLine, averageWordLength, commonWords, name);
 	}
-	
+
 	public static FileAnalyzer removePunctuation(String name){
 		BufferedReader bf;
 		PrintWriter pw;
@@ -104,8 +104,18 @@ public class FileIO {
 		} catch (IOException ex){
 			return null;
 		}
-		return readFile(newFile);
-	}
-	
-}
+		FileAnalyzer fileToReturn = readFile(newFile);
+		fileToReturn.setName(name);
 
+		/* Clean up */
+		File file = new File(newFile);
+		if(file.delete()){
+			System.out.println(file.getName() + " is deleted!");
+		}else{
+			System.out.println("Delete operation is failed.");
+		}
+
+		return fileToReturn;
+	}
+
+}

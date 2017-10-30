@@ -1,26 +1,82 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
+
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.Arrays;
 /**
 GUI class contains the main method.
  */
 public class Graphics {
-    /**
-    The main method.
-     */
+    public static JFrame frame;
+    public static JTabbedPane tabPanel;
+    public static ChooseFilePanel choosePanel;
+    public static AnalysisPanel analysisPanel;
+    public static HistoryPanel historyPanel;
+
+    /*
+
+      The main method.
+
+    */
     public static void startProgram() {
-        JFrame frame = new JFrame("Text File Analyzer");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame = new JFrame("Text File Analyzer");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JTabbedPane tabPanel = new JTabbedPane();
-        tabPanel.addTab("Choose File", new ChooseFilePanel());
-        tabPanel.addTab("Analysis", new AnalysisPanel());
-        tabPanel.addTab("History", new HistoryPanel());
-        tabPanel.addTab("Help", new HelpPanel());
+      tabPanel = new JTabbedPane();
 
-        frame.getContentPane().add(tabPanel);
-        frame.setSize(500, 160);
-        frame.setVisible(true);
+      /* Create panels */
+      choosePanel = new ChooseFilePanel();
+      analysisPanel = new AnalysisPanel();
+      historyPanel = new HistoryPanel();
+
+      JScrollPane analysisScroller = new JScrollPane(analysisPanel);
+      /* Add panels to tabPanel */
+      tabPanel.addTab("Choose File", choosePanel);
+      tabPanel.addTab("Analysis", analysisScroller);
+      tabPanel.addTab("History", historyPanel);
+      tabPanel.addTab("Help", new HelpPanel());
+
+      frame.getContentPane().add(tabPanel);
+      frame.setSize(500, 160);
+      frame.setVisible(true);
+
+
+      tabPanel.addChangeListener(new ChangeListener() {
+        public void stateChanged(ChangeEvent e) {
+          if(tabPanel.getSelectedIndex() == 0){
+            frame.setSize(500, 160);
+          } else if(tabPanel.getSelectedIndex() == 1){
+            frame.setSize(700, 560);
+            ArrayList<FileAnalyzer> fileList = DatabaseHandler.getAllRows();
+            analysisPanel.setAverages(fileList);
+          }else if(tabPanel.getSelectedIndex() == 2){
+            frame.setSize(700, 560);
+            ArrayList<FileAnalyzer> fileList = DatabaseHandler.getAllRows();
+            historyPanel.setHistory(fileList);
+          }else if(tabPanel.getSelectedIndex() == 3){
+            frame.setSize(500, 160);
+          }
+        }
+      });
+    }
+
+    public static void sendFilesToAnalysis(ArrayList<FileAnalyzer> validFiles, ArrayList<String> invalidFiles){
+      analysisPanel.setValid(validFiles);
+
+      if(validFiles.size() > 0){
+        tabPanel.setSelectedIndex(1);
+        /* TODO: go to tab */
+      }
+
+      for(int x = 0; x < invalidFiles.size(); x++){
+        JOptionPane.showMessageDialog(frame, "Invalid File Name: " + invalidFiles.get(x));
+        // JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
+      }
+
     }
 }
 /**
@@ -48,7 +104,7 @@ class ChooseFilePanel extends JPanel {
 
         descriptionLabel = new JLabel("Choose a file to be analyzed.");
         fileLabel = new JLabel("File:");
-        chooseButton = new JButton("Choose");
+        chooseButton = new JButton("Analyze");
         choosenFileName = new JTextField();
         analyzeButton = new JButton("Analyze");
 
@@ -72,9 +128,29 @@ class ChooseFilePanel extends JPanel {
     {
         public void actionPerformed(ActionEvent e)
         {
-            //String text = yearField.getText();
-            //int year = Integer.parseInt(text) + 4;
-            //graduationLabel.setText(" " + year);
+          ArrayList<FileAnalyzer> validFiles = new ArrayList<FileAnalyzer>();
+          ArrayList<String> invalidFiles = new ArrayList<String>();
+          String text = choosenFileName.getText();
+          String [] items = text.split(",");
+
+
+          for (int x = 0; x < items.length; x++) {
+            String currentFileName = items[x].trim();
+            FileAnalyzer analyzedFile = FileIO.readFile(currentFileName);
+
+            if(analyzedFile != null){
+              analyzedFile.printToConsole();
+              /* Insert into database, and add to validfiles array */
+              DatabaseHandler.insertRow(analyzedFile);
+              validFiles.add(analyzedFile);
+            } else {
+              /* Add to invalid array */
+              invalidFiles.add(currentFileName);
+            }
+          }
+
+          /* Send files back to main ? */
+          Graphics.sendFilesToAnalysis(validFiles, invalidFiles);
         }
     }
 }
@@ -87,22 +163,26 @@ class AnalysisPanel extends JPanel {
      */
     private JLabel numberOfLinesLabel, numberOfBlankLinesLabel, numberOfSpacesLabel, numberOfWordsLabel, averageCharsPerLinesLabel;
     private JLabel averageWordLengthLabel, mostCommonWordLabel;
-    private int numberOfLines = 0, numberOfBlankLines = 0, numberOfSpaces = 0, numberOfWords = 0, averageCharsPerLines = 0;
-    private int averageWordLength = 0;
     private String mostCommonWord = "";
+    private JTextArea table;
+
+    private ArrayList<FileAnalyzer> validFiles;
+    private ArrayList<FileAnalyzer> invalidFiles;
 
     /**
     Constructor.
      */
     public AnalysisPanel() {
         setLayout(new GridLayout(7,1));
-        numberOfLinesLabel = new JLabel("Number of lines: " + numberOfLines);
-        numberOfBlankLinesLabel = new JLabel("Number of blank lines: " + numberOfBlankLines);
-        numberOfSpacesLabel = new JLabel("Number of spaces:" + numberOfSpaces);
-        numberOfWordsLabel = new JLabel("Number of words:" + numberOfWords);
-        averageCharsPerLinesLabel = new JLabel("Average number of characters per line: " + averageCharsPerLines);
-        averageWordLengthLabel = new JLabel("Average word length: " + averageWordLength);
-        mostCommonWordLabel = new JLabel("Most common word: " + mostCommonWord);
+        numberOfLinesLabel = new JLabel("Number of lines:");
+        numberOfBlankLinesLabel = new JLabel("Number of blank lines:");
+        numberOfSpacesLabel = new JLabel("Number of spaces:");
+        numberOfWordsLabel = new JLabel("Number of words:");
+        averageCharsPerLinesLabel = new JLabel("Average number of characters per line: ");
+        averageWordLengthLabel = new JLabel("Average word length: ");
+        // mostCommonWordLabel = new JLabel("Most common word: ");
+
+        table = new JTextArea();
 
         add(numberOfLinesLabel);
         add(numberOfBlankLinesLabel);
@@ -110,7 +190,70 @@ class AnalysisPanel extends JPanel {
         add(numberOfWordsLabel);
         add(averageCharsPerLinesLabel);
         add(averageWordLengthLabel);
-        add(mostCommonWordLabel);
+        add(table);
+    }
+
+    public void setValid(ArrayList<FileAnalyzer> validFiles){
+      this.validFiles = validFiles;
+      System.out.println("Being called");
+
+      table.setText("Punctuation Removed, Name, Lines, Blank Lines, Spaces, Words, AVG Chars Per Line, AVG Word Length, Most Common Word\n");
+
+      for (int x = 0; x < validFiles.size(); x++) {
+        FileAnalyzer currentfile = validFiles.get(x);
+        table.append(
+          "No," +
+          currentfile.getName() + ", " +
+          currentfile.getLines() + ", " +
+          currentfile.getBlankLines() + ", " +
+          currentfile.getSpaces() + ", " +
+          currentfile.getWords() + ", " +
+          currentfile.getAvgCharsPerLine() + ", " +
+          currentfile.getAvgWordLength() + ", " +
+          currentfile.getMostCommonWords().peek().getWord() + " : " + currentfile.getMostCommonWords().peek().getCount() + "x" + ", " +
+          "\n"
+        );
+
+        currentfile = FileIO.removePunctuation(currentfile.getName());
+        table.append(
+          "Yes," +
+          currentfile.getName() + ", " +
+          currentfile.getLines() + ", " +
+          currentfile.getBlankLines() + ", " +
+          currentfile.getSpaces() + ", " +
+          currentfile.getWords() + ", " +
+          currentfile.getAvgCharsPerLine() + ", " +
+          currentfile.getAvgWordLength() + ", " +
+          currentfile.getMostCommonWords().peek().getWord() + " : " + currentfile.getMostCommonWords().peek().getCount() + "x" + ", " +
+          "\n"
+        );
+      }
+    }
+    public void setInvalid(ArrayList<FileAnalyzer> invalidFiles){
+      this.invalidFiles = invalidFiles;
+    }
+
+
+    public void setAverages(ArrayList<FileAnalyzer> fileList){
+      int avgLines = 0, avgBlankLines = 0, avgSpaces = 0, avgWords = 0, avgCharsPerLine = 0, avgWordLength = 0;
+
+      for(int x = 0; x < fileList.size(); x++){
+        FileAnalyzer file = fileList.get(x);
+        avgLines += file.getLines();
+        avgBlankLines += file.getBlankLines();
+        avgSpaces += file.getSpaces();
+        avgWords += file.getWords();
+        avgCharsPerLine += file.getAvgCharsPerLine();
+        avgWordLength += file.getAvgWordLength();
+      }
+
+
+      numberOfLinesLabel.setText("Average # of lines: " + avgLines / (float)fileList.size());
+      numberOfBlankLinesLabel.setText("Average # of blank lines: " + avgBlankLines / (float)fileList.size());
+      numberOfSpacesLabel.setText("Average # of spaces: " + avgSpaces / (float)fileList.size());
+      numberOfWordsLabel.setText("Average # of words: " + avgWordLength / (float)fileList.size());
+      averageCharsPerLinesLabel.setText("Average # of characters per line: " + avgCharsPerLine / (float)fileList.size());
+      averageWordLengthLabel.setText("Average # of word length: " + avgWordLength / (float)fileList.size());
     }
 
 }
@@ -135,6 +278,24 @@ class HistoryPanel extends JPanel {
         scrollbar.setVerticalScrollBarPolicy(JScrollPane. VERTICAL_SCROLLBAR_ALWAYS);
         add(historyTextField, BorderLayout.CENTER);
 
+    }
+
+    public void setHistory(ArrayList<FileAnalyzer> fileList){
+      historyTextField.setText("Name, Lines, Blank Lines, Spaces, Words, AVG Chars Per Line, AVG Word Length, Created At\n");
+      for (int x = 0; x < fileList.size(); x++) {
+        FileAnalyzer currentfile = fileList.get(x);
+        historyTextField.append(
+          currentfile.getName() + ", " +
+          currentfile.getLines() + ", " +
+          currentfile.getBlankLines() + ", " +
+          currentfile.getSpaces() + ", " +
+          currentfile.getWords() + ", " +
+          currentfile.getAvgCharsPerLine() + ", " +
+          currentfile.getAvgWordLength() + ", " +
+          currentfile.getCreatedAt() +
+          "\n"
+        );
+      }
     }
 
 }

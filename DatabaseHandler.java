@@ -27,8 +27,22 @@ public class DatabaseHandler{
       FileWriter fw = new FileWriter(filename, true);
       /* Insert row */
       String uniqueIdentifier = UUID.randomUUID().toString();
-      //id, name, lines, blanklines, spaces, words
-      String toInsert = String.format("%s,%s,%d,%d,%d,%d%n", uniqueIdentifier, fileToWrite.getName(), fileToWrite.getLines(), fileToWrite.getBlankLines(), fileToWrite.getSpaces(), fileToWrite.getWords());
+
+      String createdAtDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date());
+
+      //id, name, lines, blanklines, spaces, words, avgwords, avgCharsPerLine
+      String toInsert = String.format("%s,%s,%d,%d,%d,%d,%d,%d,%s%n",
+        uniqueIdentifier,
+        fileToWrite.getName(),
+        fileToWrite.getLines(),
+        fileToWrite.getBlankLines(),
+        fileToWrite.getSpaces(),
+        fileToWrite.getWords(),
+        fileToWrite.getAvgWordLength(),
+        fileToWrite.getAvgCharsPerLine(),
+        createdAtDate
+      );
+
       fw.write(toInsert);
       fw.close();
       return true;

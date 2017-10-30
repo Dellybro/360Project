@@ -9,6 +9,7 @@ public class FileAnalyzer {
     private PriorityQueue<WordTotal> mostCommonWords;
     private String name;
     private String uuid;
+    private String createdAt;
     static int totalFiles = 0;
 
     public FileAnalyzer()
@@ -64,6 +65,15 @@ public class FileAnalyzer {
             break;
           case 5:
             setWords(Integer.parseInt(arrayOfStrings[i]));
+            break;
+          case 6:
+            setAvgWordLength(Integer.parseInt(arrayOfStrings[i]));
+            break;
+          case 7:
+            setAvgCharsPerLine(Integer.parseInt(arrayOfStrings[i]));
+            break;
+          case 8:
+            setCreatedAt(arrayOfStrings[i]);
             break;
           default:
             break;
@@ -142,5 +152,26 @@ public class FileAnalyzer {
     public PriorityQueue<WordTotal> getMostCommonWords()
     {
         return mostCommonWords;
+    }
+    public void setCreatedAt(String stringDate){
+      createdAt = stringDate;
+    }
+    public String getCreatedAt(){
+      return createdAt;
+    }
+
+    public void printToConsole(){
+
+
+      System.out.println("----- File Analyzer " + getName());
+      System.out.println("Lines: " + getLines());
+      System.out.println("BlankLines: " + getBlankLines());
+      System.out.println("SPaces: " + getSpaces());
+      System.out.println("Words: " + getWords());
+      System.out.println("avgCharsPerLine: " + getAvgCharsPerLine());
+      System.out.println("avgWordLength: " + getAvgWordLength());
+      System.out.println("Most Common Word: " + getMostCommonWords().peek().getWord() + "; times: " + getMostCommonWords().peek().getCount());
+      System.out.println("Uuid: " + getUUID());
+      System.out.println("----- End File analysis");
     }
 }
