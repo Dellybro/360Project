@@ -13,6 +13,7 @@ public class FileIO {
 	
 	
 	public static FileAnalyzer readFile(String name) {
+		if(name == null) return null;
 		PriorityQueue<WordTotal> commonWords = new PriorityQueue<WordTotal>();
 		int numOfLines = 0; //Used to keep track of the number of lines
 		int numOfBlankLines = 0;//Used to keep track of the number of blank lines
@@ -70,10 +71,10 @@ public class FileIO {
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File was invalid/not found");
-			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		return new FileAnalyzer(numOfLines, numOfBlankLines, numOfSpaces, numOfWords, averageCharsPerLine, averageWordLength, commonWords, name);
 	}
@@ -100,9 +101,9 @@ public class FileIO {
 			bf.close();
 		} catch (FileNotFoundException ex) {
 			// TODO Auto-generated catch block
-			ex.printStackTrace();
+			return null;
 		} catch (IOException ex){
-			ex.printStackTrace();
+			return null;
 		}
 		return readFile(newFile);
 	}
