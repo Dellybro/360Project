@@ -31,7 +31,7 @@ public class DatabaseHandler{
       String createdAtDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date());
 
       //id, name, lines, blanklines, spaces, words, avgwords, avgCharsPerLine
-      String toInsert = String.format("%s,%s,%d,%d,%d,%d,%d,%d,%s%n",
+      String toInsert = String.format("%s,%s,%d,%d,%d,%d,%d,%d,%s,%s%n",
         uniqueIdentifier,
         fileToWrite.getName(),
         fileToWrite.getLines(),
@@ -40,6 +40,7 @@ public class DatabaseHandler{
         fileToWrite.getWords(),
         fileToWrite.getAvgWordLength(),
         fileToWrite.getAvgCharsPerLine(),
+        fileToWrite.getFilePath(),
         createdAtDate
       );
 

@@ -10,6 +10,7 @@ public class FileAnalyzer {
     private String name;
     private String uuid;
     private String createdAt;
+    private String filePath;
     static int totalFiles = 0;
 
     public FileAnalyzer()
@@ -73,6 +74,9 @@ public class FileAnalyzer {
             setAvgCharsPerLine(Integer.parseInt(arrayOfStrings[i]));
             break;
           case 8:
+            setFilePath(arrayOfStrings[i]);
+            break;
+          case 9:
             setCreatedAt(arrayOfStrings[i]);
             break;
           default:
@@ -86,6 +90,13 @@ public class FileAnalyzer {
     }
     public String getUUID(){
       return uuid;
+    }
+
+    public void setFilePath(String filepath){
+      this.filePath = filepath;
+    }
+    public String getFilePath(){
+      return this.filePath;
     }
 
     public void setName(String inputName)

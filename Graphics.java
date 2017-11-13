@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
-
+import java.io.File;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +82,7 @@ public class Graphics {
 /**
 ChooseFilePanel inner class creates the panel that is in the Choose File tab.
  */
-class ChooseFilePanel extends JPanel {
+class ChooseFilePanel extends JPanel implements ActionListener {
     /**
     Instances variables.
      */
@@ -91,6 +91,7 @@ class ChooseFilePanel extends JPanel {
     private JTextField choosenFileName;
     private JPanel topPanel, middlePanel, bottomPanel;
 
+    private File[] files;
     /**
     Constructor.
      */
@@ -104,9 +105,10 @@ class ChooseFilePanel extends JPanel {
 
         descriptionLabel = new JLabel("Choose a file to be analyzed.");
         fileLabel = new JLabel("File:");
-        chooseButton = new JButton("Analyze");
-        choosenFileName = new JTextField();
+        chooseButton = new JButton("Choose File(s)");
         analyzeButton = new JButton("Analyze");
+        choosenFileName = new JTextField();
+        choosenFileName.setEnabled(false);
 
         topPanel.add(descriptionLabel);
         middlePanel.add(fileLabel, BorderLayout.WEST);
@@ -118,40 +120,66 @@ class ChooseFilePanel extends JPanel {
         add(middlePanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        chooseButton.addActionListener(new ChooseButtonListener());
+        chooseButton.addActionListener(this);
+        analyzeButton.addActionListener(this);
     }
 
-    /**
-    Listener inner class for chooseButton.
-     */
-    private class ChooseButtonListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e)
-        {
-          ArrayList<FileAnalyzer> validFiles = new ArrayList<FileAnalyzer>();
-          ArrayList<String> invalidFiles = new ArrayList<String>();
-          String text = choosenFileName.getText();
-          String [] items = text.split(",");
+    public void actionPerformed(ActionEvent e){
 
+      if(e.getActionCommand().equals("Analyze")){
+        if(files == null || files.length == 0 ){
+          JOptionPane.showMessageDialog(null, "No files selected");
+          return;
+        }
 
-          for (int x = 0; x < items.length; x++) {
-            String currentFileName = items[x].trim();
-            FileAnalyzer analyzedFile = FileIO.readFile(currentFileName);
+        /* Analyze Files */
+        ArrayList<FileAnalyzer> validFiles = new ArrayList<FileAnalyzer>();
+        ArrayList<String> invalidFiles = new ArrayList<String>();
 
-            if(analyzedFile != null){
-              analyzedFile.printToConsole();
-              /* Insert into database, and add to validfiles array */
-              DatabaseHandler.insertRow(analyzedFile);
-              validFiles.add(analyzedFile);
+        for (int x = 0; x < files.length; x++) {
+          String currentFileName = files[x].toPath().toString();
+          FileAnalyzer analyzedFile = FileIO.readFile(currentFileName);
+          analyzedFile.setName(files[x].getName());
+          analyzedFile.setFilePath(files[x].toPath().toString());
+
+          if(analyzedFile != null){
+            analyzedFile.printToConsole();
+            /* Insert into database, and add to validfiles array */
+            DatabaseHandler.insertRow(analyzedFile);
+            validFiles.add(analyzedFile);
+          } else {
+            /* Add to invalid array */
+            invalidFiles.add(currentFileName);
+          }
+        }
+
+        /* Send files back to main ? */
+        Graphics.sendFilesToAnalysis(validFiles, invalidFiles);
+      } else {
+        /* File chooser */
+        JFileChooser fc = new JFileChooser();
+        File workingDirectory = new File(System.getProperty("user.dir"));
+        fc.setCurrentDirectory(workingDirectory);
+        fc.setMultiSelectionEnabled(true);
+
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+          files = fc.getSelectedFiles();
+
+          String fileNames = "";
+          for(int i = 0; i < files.length; i++){
+            System.out.println(files[i].toPath());
+            if(i == files.length - 1){
+              fileNames = fileNames + files[i].getName();
             } else {
-              /* Add to invalid array */
-              invalidFiles.add(currentFileName);
+              fileNames = fileNames + files[i].getName() + ", ";
             }
           }
-
-          /* Send files back to main ? */
-          Graphics.sendFilesToAnalysis(validFiles, invalidFiles);
+          choosenFileName.setText(fileNames);
+        } else {
+          files = null;
+          choosenFileName.setText("No Files Selected");
         }
+      }
     }
 }
 /**
@@ -214,17 +242,19 @@ class AnalysisPanel extends JPanel {
           "\n"
         );
 
-        currentfile = FileIO.removePunctuation(currentfile.getName());
+        FileAnalyzer removedPuncs = FileIO.removePunctuation(currentfile.getFilePath());
+        removedPuncs.setName(currentfile.getName());
+        removedPuncs.setFilePath(currentfile.getFilePath());
         table.append(
           "Yes," +
-          currentfile.getName() + ", " +
-          currentfile.getLines() + ", " +
-          currentfile.getBlankLines() + ", " +
-          currentfile.getSpaces() + ", " +
-          currentfile.getWords() + ", " +
-          currentfile.getAvgCharsPerLine() + ", " +
-          currentfile.getAvgWordLength() + ", " +
-          currentfile.getMostCommonWords().peek().getWord() + " : " + currentfile.getMostCommonWords().peek().getCount() + "x" + ", " +
+          removedPuncs.getName() + ", " +
+          removedPuncs.getLines() + ", " +
+          removedPuncs.getBlankLines() + ", " +
+          removedPuncs.getSpaces() + ", " +
+          removedPuncs.getWords() + ", " +
+          removedPuncs.getAvgCharsPerLine() + ", " +
+          removedPuncs.getAvgWordLength() + ", " +
+          removedPuncs.getMostCommonWords().peek().getWord() + " : " + removedPuncs.getMostCommonWords().peek().getCount() + "x" + ", " +
           "\n"
         );
       }
