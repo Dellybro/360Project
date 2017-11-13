@@ -36,7 +36,7 @@ This will run than run program! Continue below to see example usages.
 360 Project Overview -
 
 1. Opening and validating file names
-2. Reading text from file and reporting
+2. Reading text from file and reports
   a. # lines
   b. # blank lines
   c. # spaces
