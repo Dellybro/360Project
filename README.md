@@ -36,19 +36,19 @@ This will run than run program! Continue below to see example usages.
 360 Project Overview -
 
 1. Opening and validating file names
-2. Reading text from file and reports
-  \n\t a. # lines
-  \n\t b. # blank lines
-  \n\t c. # spaces
-  \n\t d. # words
-  \n\t e. Average chars per line
-  \n\t f. Average word length
-  \n\t g. Most common words
+2. Reading text from file and reports <br />
+  a. # lines <br />
+  b. # blank lines <br />
+  c. # spaces <br />
+  d. # words <br />
+  e. Average chars per line <br />
+  f. Average word length <br />
+  g. Most common words <br />
 3. Help information
 4. Removing punctuation and possession from analysis
-5. Handling multiple files
-  a. Reporting history of all files processed (name and date)
-  b. Averages across files
+5. Handling multiple files <br />
+  a. Reporting history of all files processed (name and date) <br />
+  b. Averages across files <br />
 
 
 
