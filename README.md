@@ -53,3 +53,6 @@ This will run than run program! Continue below to see example usages.
 
 
 ## Example Usages
+
+![Alt text](usecase1.png?raw=true "Title")
+![Alt text](usecase2.png?raw=true "Title")
