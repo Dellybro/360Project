@@ -37,13 +37,13 @@ This will run than run program! Continue below to see example usages.
 
 1. Opening and validating file names
 2. Reading text from file and reports
-  a. # lines
-  b. # blank lines
-  c. # spaces
-  d. # words
-  e. Average chars per line
-  f. Average word length
-  g. Most common words
+a. # lines
+b. # blank lines
+c. # spaces
+d. # words
+e. Average chars per line
+f. Average word length
+g. Most common words
 3. Help information
 4. Removing punctuation and possession from analysis
 5. Handling multiple files
