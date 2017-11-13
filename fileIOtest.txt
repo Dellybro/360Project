@@ -1,0 +1,7 @@
+This' is' a' test! case!! for fileIO
+!!!!
+Class's project
+
+123
+
+stuffislong

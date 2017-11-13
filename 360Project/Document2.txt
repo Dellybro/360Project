@@ -1,0 +1,30 @@
+import junit.framework.TestCase;
+
+public class DateTester extends TestCase {
+
+  public void testDate() {
+    Date d = new Date(2005, 2, 14);
+    assertEquals(d.toString(), "2005/2/14");
+  }
+
+  public void testFail() {
+    Date d = new Date(2005, 5, 23);
+    assertEquals(d.toString(), "2005/2/14");
+  }
+}
+
+class Date {
+  private int year;
+  private int month;
+  private int day;
+  
+  public Date(int year, int month, int day) {
+    this.year = year;
+    this.month = month;
+    this.day = day;
+  }
+
+  public String toString() {
+    return year + "/" + month + "/" + day;
+  }
+}
