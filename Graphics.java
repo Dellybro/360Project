@@ -137,8 +137,9 @@ class ChooseFilePanel extends JPanel implements ActionListener {
         ArrayList<String> invalidFiles = new ArrayList<String>();
 
         for (int x = 0; x < files.length; x++) {
-          String currentFileName = files[x].toPath().toString();
-          FileAnalyzer analyzedFile = FileIO.readFile(currentFileName);
+          String filePath = files[x].toPath().toString();
+          String fileName = files[x].getName();
+          FileAnalyzer analyzedFile = FileIO.readFileWithPath(fileName, filePath);
           analyzedFile.setName(files[x].getName());
           analyzedFile.setFilePath(files[x].toPath().toString());
 
@@ -149,7 +150,7 @@ class ChooseFilePanel extends JPanel implements ActionListener {
             validFiles.add(analyzedFile);
           } else {
             /* Add to invalid array */
-            invalidFiles.add(currentFileName);
+            invalidFiles.add(fileName);
           }
         }
 
@@ -242,19 +243,17 @@ class AnalysisPanel extends JPanel {
           "\n"
         );
 
-        FileAnalyzer removedPuncs = FileIO.removePunctuation(currentfile.getFilePath());
-        removedPuncs.setName(currentfile.getName());
-        removedPuncs.setFilePath(currentfile.getFilePath());
+        currentfile = FileIO.removePunctuationWithPath(currentfile.getName(), currentfile.getFilePath());
         table.append(
           "Yes," +
-          removedPuncs.getName() + ", " +
-          removedPuncs.getLines() + ", " +
-          removedPuncs.getBlankLines() + ", " +
-          removedPuncs.getSpaces() + ", " +
-          removedPuncs.getWords() + ", " +
-          removedPuncs.getAvgCharsPerLine() + ", " +
-          removedPuncs.getAvgWordLength() + ", " +
-          removedPuncs.getMostCommonWords().peek().getWord() + " : " + removedPuncs.getMostCommonWords().peek().getCount() + "x" + ", " +
+          currentfile.getName() + ", " +
+          currentfile.getLines() + ", " +
+          currentfile.getBlankLines() + ", " +
+          currentfile.getSpaces() + ", " +
+          currentfile.getWords() + ", " +
+          currentfile.getAvgCharsPerLine() + ", " +
+          currentfile.getAvgWordLength() + ", " +
+          currentfile.getMostCommonWords().peek().getWord() + " : " + currentfile.getMostCommonWords().peek().getCount() + "x" + ", " +
           "\n"
         );
       }

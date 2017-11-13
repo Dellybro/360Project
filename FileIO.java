@@ -11,6 +11,22 @@ import java.util.PriorityQueue;
 
 public class FileIO {
 
+	public static FileAnalyzer readFileWithPath(String name, String path){
+		FileAnalyzer analyzer = readFile(path);
+		if(analyzer != null){
+			analyzer.setName(name);
+			analyzer.setFilePath(path);
+		}
+		return analyzer;
+	}
+	public static FileAnalyzer removePunctuationWithPath(String name, String path){
+		FileAnalyzer analyzer = removePunctuation(path);
+		if(analyzer != null){
+			analyzer.setName(name);
+			analyzer.setFilePath(path);
+		}
+		return analyzer;
+	}
 
 	public static FileAnalyzer readFile(String name) {
 		if(name == null) return null;
