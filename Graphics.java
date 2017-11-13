@@ -140,9 +140,6 @@ class ChooseFilePanel extends JPanel implements ActionListener {
           String filePath = files[x].toPath().toString();
           String fileName = files[x].getName();
           FileAnalyzer analyzedFile = FileIO.readFileWithPath(fileName, filePath);
-          analyzedFile.setName(files[x].getName());
-          analyzedFile.setFilePath(files[x].toPath().toString());
-
           if(analyzedFile != null){
             analyzedFile.printToConsole();
             /* Insert into database, and add to validfiles array */
