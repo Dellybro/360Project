@@ -170,7 +170,6 @@ class ChooseFilePanel extends JPanel implements ActionListener {
 
           String fileNames = "";
           for(int i = 0; i < files.length; i++){
-            System.out.println(files[i].toPath());
             if(i == files.length - 1){
               fileNames = fileNames + files[i].getName();
             } else {
@@ -208,7 +207,6 @@ class AnalysisPanel extends JPanel {
 
     public void setValid(ArrayList<FileAnalyzer> validFiles){
       this.validFiles = validFiles;
-      System.out.println("Being called");
 
       table.setText("Punctuation Removed, Name, Lines, Blank Lines, Spaces, Words, AVG Chars Per Line, AVG Word Length, Most Common Word\n");
 
@@ -360,18 +358,21 @@ class HelpPanel extends JPanel {
     private JLabel number1Label;
     private JLabel number2Label;
     private JLabel number3Label;
+    private JLabel number4Label;
 
     /**
     Constructor.
      */
     public HelpPanel() {
-        setLayout(new GridLayout(3,1));
+        setLayout(new GridLayout(4,1));
         number1Label = new JLabel("Choose File Tab - Select a file from your computer.");
         number2Label = new JLabel("Analysis Tab - Shows the analysis of the file choosen.");
         number3Label = new JLabel("History Tab - Shows the history of all files that have been analyzed.");
+        number4Label = new JLabel("Averages Tab - Shows the averages of all analysis that has been analyzed.");
         add(number1Label);
         add(number2Label);
         add(number3Label);
+        add(number4Label);
 
     }
 

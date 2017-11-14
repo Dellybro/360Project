@@ -5,13 +5,10 @@ c105b0ae-f8ad-4ffe-a9c5-e56c0a8d91bc,testcase1.txt,11,5,23,29,4,14,/Users/Dellyb
 2ebad84b-687a-4a37-ab59-6475a1e03213,testcase1.txt,11,5,23,29,4,14,/Users/Dellybro/Desktop/school/360/deliverableOne/testcase1.txt,2017/11/12 22:16:07
 af56ad26-ee77-432f-8e7c-be4b5e1d9d27,test.txt,1,0,194,197,4,1188,/Users/Dellybro/Desktop/school/360/deliverableOne/test.txt,2017/11/12 22:16:17
 5a0d40b9-6cda-4fe8-912e-30f26c0b5a43,testcase1.txt,11,5,23,29,4,14,/Users/Dellybro/Desktop/school/360/deliverableOne/testcase1.txt,2017/11/12 22:16:17
-<<<<<<< HEAD
 23010edd-7665-4ef8-b071-12d5d06d8529,test.txt,1,0,194,197,4,1188,/Users/Dellybro/Desktop/school/360/deliverableOne/test.txt,2017/11/13 16:38:00
 8b414c3d-025a-4a66-ad60-5bf3ed04c8b4,testcase1.txt,11,5,23,29,4,14,/Users/Dellybro/Desktop/school/360/deliverableOne/testcase1.txt,2017/11/13 16:38:00
 dc6c82b2-b1e3-4e14-8858-84b835d8c36d,database.txt,9,0,9,161,3,147,/Users/Dellybro/Desktop/school/360/deliverableOne/database.txt,2017/11/13 17:36:32
-=======
 c29a5c76-1514-4b7d-8bc1-08b4b5563498,test.txt,1,0,194,197,4,1188,C:\Users\Bq239\Documents\GitHub\Project360\360Project\test.txt,2017/11/13 17:12:46
 c561c8a9-4cc4-41c1-a9e4-00d61e7786f3,test.txt,1,0,194,197,4,1188,C:\Users\Bq239\Documents\GitHub\Project360\360Project\test.txt,2017/11/13 17:26:58
 8f90d003-8b24-48bb-9121-4f72d996c659,fileIOtest.txt,7,2,7,10,5,9,C:\Users\Bq239\Documents\GitHub\Project360\360Project\fileIOtest.txt,2017/11/13 17:36:28
 82161d9d-a359-4483-8aed-d14052e28bb2,fileIOtest.txt,7,2,7,10,5,9,C:\Users\Bq239\Documents\GitHub\Project360\360Project\fileIOtest.txt,2017/11/13 17:38:03
->>>>>>> 33ebf2f0fbe7bdda3dc8ee25c1ae54fb6634fa84
