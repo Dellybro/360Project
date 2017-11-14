@@ -11,24 +11,7 @@ import java.util.PriorityQueue;
 
 public class FileIO {
 
-	public static FileAnalyzer readFileWithPath(String name, String path){
-		FileAnalyzer analyzer = readFile(path);
-		if(analyzer != null){
-			analyzer.setName(name);
-			analyzer.setFilePath(path);
-		}
-		return analyzer;
-	}
-	public static FileAnalyzer removePunctuationWithPath(String name, String path){
-		FileAnalyzer analyzer = removePunctuation(path);
-		if(analyzer != null){
-			analyzer.setName(name);
-			analyzer.setFilePath(path);
-		}
-		return analyzer;
-	}
-
-	public static FileAnalyzer readFile(String name) {
+	public static FileAnalyzer readFile(String name, String path) {
 		if(name == null) return null;
 		PriorityQueue<WordTotal> commonWords = new PriorityQueue<WordTotal>();
 		int numOfLines = 0; //Used to keep track of the number of lines
@@ -92,10 +75,10 @@ public class FileIO {
 			// TODO Auto-generated catch block
 			return null;
 		}
-		return new FileAnalyzer(numOfLines, numOfBlankLines, numOfSpaces, numOfWords, averageCharsPerLine, averageWordLength, commonWords, name);
+		return new FileAnalyzer(numOfLines, numOfBlankLines, numOfSpaces, numOfWords, averageCharsPerLine, averageWordLength, commonWords, name, path);
 	}
 
-	public static FileAnalyzer removePunctuation(String name){
+	public static FileAnalyzer removePunctuation(String name, String path){
 		BufferedReader bf;
 		PrintWriter pw;
 		String newFile = "removedPunctuation.txt";
@@ -120,9 +103,7 @@ public class FileIO {
 		} catch (IOException ex){
 			return null;
 		}
-		FileAnalyzer fileToReturn = readFile(newFile);
-		fileToReturn.setName(name);
-
+		FileAnalyzer fileToReturn = readFile(newFile, path);
 		/* Clean up */
 		File file = new File(newFile);
 		if(file.delete()){
