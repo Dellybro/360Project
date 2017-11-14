@@ -139,7 +139,7 @@ class ChooseFilePanel extends JPanel implements ActionListener {
         for (int x = 0; x < files.length; x++) {
           String filePath = files[x].toPath().toString();
           String fileName = files[x].getName();
-          FileAnalyzer analyzedFile = FileIO.readFileWithPath(fileName, filePath);
+          FileAnalyzer analyzedFile = FileIO.readFile(fileName, filePath);
           if(analyzedFile != null){
             analyzedFile.printToConsole();
             /* Insert into database, and add to validfiles array */
@@ -240,7 +240,7 @@ class AnalysisPanel extends JPanel {
           "\n"
         );
 
-        currentfile = FileIO.removePunctuationWithPath(currentfile.getName(), currentfile.getFilePath());
+        currentfile = FileIO.removePunctuation(currentfile.getName(), currentfile.getFilePath());
         table.append(
           "Yes," +
           currentfile.getName() + ", " +

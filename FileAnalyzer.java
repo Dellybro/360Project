@@ -35,7 +35,7 @@ public class FileAnalyzer {
       mostCommonWords = null;
       name = inputName;
     }
-    public FileAnalyzer(int lC, int bC, int sC, int wC, int aCPL, int aWL, PriorityQueue<WordTotal> p, String filename)
+    public FileAnalyzer(int lC, int bC, int sC, int wC, int aCPL, int aWL, PriorityQueue<WordTotal> p, String filename, String path)
     {
         lines = lC;
         blankLines = bC;
@@ -45,6 +45,7 @@ public class FileAnalyzer {
         avgWordLength = aWL;
         mostCommonWords = p;
         name = filename;
+        filePath = path;
     }
     public FileAnalyzer(String[] arrayOfStrings){
       for (int i = 0; i < arrayOfStrings.length; i++) {
