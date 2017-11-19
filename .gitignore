@@ -13,3 +13,5 @@ WordTotal.class
 FileIOTest.class
 /AveragesPanel.class
 /JavaTest.class
+
+*.class
