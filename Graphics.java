@@ -17,6 +17,7 @@ public class Graphics {
     public static AnalysisPanel analysisPanel;
     public static HistoryPanel historyPanel;
     public static AveragesPanel averagePanel;
+    public static boolean showNumLines, showNumBlankLines, showNumSpaces, showNumWords, showAveChar, showAveWord, showComWord;
 
     /*
 
@@ -27,6 +28,14 @@ public class Graphics {
       frame = new JFrame("Text File Analyzer");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+      showNumLines = true;
+      showNumBlankLines = true;
+      showNumSpaces = true;
+      showNumWords = true;
+      showAveChar = true;
+      showAveWord = true;
+      showComWord = true;
+      
       tabPanel = new JTabbedPane();
 
       /* Create panels */
@@ -87,7 +96,7 @@ public class Graphics {
 /**
 ChooseFilePanel inner class creates the panel that is in the Choose File tab.
  */
-class ChooseFilePanel extends JPanel implements ActionListener {
+class ChooseFilePanel extends JPanel implements ActionListener, ItemListener{
     /**
     Instances variables.
      */
@@ -95,6 +104,7 @@ class ChooseFilePanel extends JPanel implements ActionListener {
     private JLabel descriptionLabel, fileLabel;
     private JTextField choosenFileName;
     private JPanel topPanel, middlePanel, bottomPanel;
+    JCheckBox button1, button2, button3, button4, button5, button6, button7, button8;
 
     private File[] files;
     /**
@@ -114,12 +124,60 @@ class ChooseFilePanel extends JPanel implements ActionListener {
         analyzeButton = new JButton("Analyze");
         choosenFileName = new JTextField();
         choosenFileName.setEnabled(false);
+        
+        button1 = new JCheckBox("Number of Lines:");
+        button1.setMnemonic(KeyEvent.VK_C);
+        button1.setSelected(true);
+        button1.addItemListener(this);
+        
+        button2 = new JCheckBox("Number of blank lines:");
+        button2.setMnemonic(KeyEvent.VK_C);
+        button2.setSelected(true);
+        button2.addItemListener(this);
+        
+        button3 = new JCheckBox("Number of spaces:");
+        button3.setMnemonic(KeyEvent.VK_C);
+        button3.setSelected(true);
+        button3.addItemListener(this);
+        
+        button4 = new JCheckBox("Number of words:");
+        button4.setMnemonic(KeyEvent.VK_C);
+        button4.setSelected(true);
+        button4.addItemListener(this);
 
+        button5 = new JCheckBox("Number of words:");
+        button5.setMnemonic(KeyEvent.VK_C);
+        button5.setSelected(true);
+        button5.addItemListener(this);
+        
+        button6 = new JCheckBox("Average chars per line:");
+        button6.setMnemonic(KeyEvent.VK_C);
+        button6.setSelected(true);
+        button6.addItemListener(this);
+        
+        button7 = new JCheckBox("Average word length:");
+        button7.setMnemonic(KeyEvent.VK_C);
+        button7.setSelected(true);
+        button7.addItemListener(this);
+        
+        button8 = new JCheckBox("Most common words:");
+        button8.setMnemonic(KeyEvent.VK_C);
+        button8.setSelected(true);
+        button8.addItemListener(this);
+        
         topPanel.add(descriptionLabel);
         middlePanel.add(fileLabel, BorderLayout.WEST);
         middlePanel.add(choosenFileName, BorderLayout.CENTER);
         middlePanel.add(chooseButton, BorderLayout.EAST);
         bottomPanel.add(analyzeButton);
+        bottomPanel.add(button1);
+        bottomPanel.add(button2);
+        bottomPanel.add(button3);
+        bottomPanel.add(button4);
+        bottomPanel.add(button5);
+        bottomPanel.add(button6);
+        bottomPanel.add(button7);
+        bottomPanel.add(button8);
 
         add(topPanel, BorderLayout.NORTH);
         add(middlePanel, BorderLayout.CENTER);
@@ -183,6 +241,46 @@ class ChooseFilePanel extends JPanel implements ActionListener {
         }
       }
     }
+    
+    public void itemStateChanged(ItemEvent e) {
+        Object source = e.getItemSelectable();
+ 
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            if (source == button1) {
+            	Graphics.showNumLines = true;
+            } else if (source == button2) {
+            	Graphics.showNumBlankLines = true;
+            } else if (source == button3) {
+                Graphics.showNumSpaces = true;
+            } else if (source == button4) {
+                Graphics.showNumWords = true;
+            }else if(source == button5){
+            	Graphics.showAveChar = true;
+            }else if(source == button6){
+            	Graphics.showAveWord = true;
+            }else if(source == button7){
+            	Graphics.showComWord = true;
+            }
+        }
+ 
+        if (e.getStateChange() == ItemEvent.DESELECTED) {
+            if (source == button1) {
+            	Graphics.showNumLines = false;
+            } else if (source == button2) {
+            	Graphics.showNumBlankLines = false;
+            } else if (source == button3) {
+                Graphics.showNumSpaces = false;
+            } else if (source == button4) {
+                Graphics.showNumWords = false;
+            }else if(source == button5){
+            	Graphics.showAveChar = false;
+            }else if(source == button6){
+            	Graphics.showAveWord = false;
+            }else if(source == button7){
+            	Graphics.showComWord = false;
+            }
+        }
+    }
 }
 /**
 AnalysisPanel inner class creates the panel that is in the Analysis tab.
@@ -204,7 +302,7 @@ class AnalysisPanel extends JPanel {
         table = new JTextArea();
         add(table);
     }
-
+    //change data sets
     public void setValid(ArrayList<FileAnalyzer> validFiles){
       this.validFiles = validFiles;
 
