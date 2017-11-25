@@ -18,6 +18,7 @@ public class Graphics {
     public static HistoryPanel historyPanel;
     public static AveragesPanel averagePanel;
     public static boolean showNumLines, showNumBlankLines, showNumSpaces, showNumWords, showAveChar, showAveWord, showComWord;
+    public static ArrayList<String> tableHeaders = new ArrayList<String>();
 
     /*
 
@@ -35,6 +36,14 @@ public class Graphics {
       showAveChar = true;
       showAveWord = true;
       showComWord = true;
+
+      tableHeaders.add(Utility.lines);
+      tableHeaders.add(Utility.blankLines);
+      tableHeaders.add(Utility.spaces);
+      tableHeaders.add(Utility.words);
+      tableHeaders.add(Utility.averageCharPerLine);
+      tableHeaders.add(Utility.averageWordLength);
+      tableHeaders.add(Utility.mostCommonWord);
 
       tabPanel = new JTabbedPane();
 
@@ -66,7 +75,7 @@ public class Graphics {
           }else if(tabPanel.getSelectedIndex() == 2){
             frame.setSize(600, 250);
             ArrayList<FileAnalyzer> fileList = DatabaseHandler.getAllRows();
-            historyPanel.setHistory(fileList);
+            historyPanel.setHistory(fileList, tableHeaders);
           }else if(tabPanel.getSelectedIndex() == 3){
             ArrayList<FileAnalyzer> fileList = DatabaseHandler.getAllRows();
             averagePanel.setAverages(fileList);
@@ -78,8 +87,21 @@ public class Graphics {
       });
     }
 
+    public static void removeHeader(String headerToRemove){
+      for ( int i = 0;  i < tableHeaders.size(); i++){
+        if(tableHeaders.get(i).equals(headerToRemove)){
+            tableHeaders.remove(i);
+            return;
+        }
+      }
+    }
+
+    public static void addHeader(String headerToAdd){
+      tableHeaders.add(headerToAdd);
+    }
+
     public static void sendFilesToAnalysis(ArrayList<FileAnalyzer> validFiles, ArrayList<String> invalidFiles){
-      analysisPanel.setValid(validFiles);
+      analysisPanel.setValid(validFiles,tableHeaders);
 
       if(validFiles.size() > 0){
         tabPanel.setSelectedIndex(1);

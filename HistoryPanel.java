@@ -17,7 +17,7 @@ class HistoryPanel extends JPanel {
      */
     private JTable historyTable;
     private JScrollPane scrollbar;
-    private Object[][] date = {};
+    String[] columnNames;
 
     /**
     Constructor.
@@ -28,16 +28,9 @@ class HistoryPanel extends JPanel {
         historyTable = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel(0, 0);
 
-        String[] columnNames = {
-          "Name",
-          "Lines",
-          "Blank Lines",
-          "Spaces",
-          "Words",
-          "Average Chars Per Line",
-          "Average Word Length",
-          "Most common Word",
-          "Created At"
+        columnNames = new String[]{
+          "Created Date",
+          "Name"
         };
 
         tableModel.setColumnIdentifiers(columnNames);
@@ -48,8 +41,14 @@ class HistoryPanel extends JPanel {
 
     }
 
-    public void setHistory(ArrayList<FileAnalyzer> fileList){
+    public void setHistory(ArrayList<FileAnalyzer> fileList, ArrayList<String> tableHeaders){
+
+
+      String[] tb = tableHeaders.toArray(new String[tableHeaders.size()]);
+      String[] bothHeaders = Utility.mergeStringArrays(columnNames, tb);
+
       DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
+      model.setColumnIdentifiers(bothHeaders);
       model.setRowCount(0);
 
       for (int x = 0; x < fileList.size(); x++) {
@@ -58,17 +57,39 @@ class HistoryPanel extends JPanel {
 
         String mostCommonWord = currentfile.getMostCommonWords().peek().getWord() + " : " + currentfile.getMostCommonWords().peek().getCount() + "x";
 
-        model.addRow(new Object[] {
-          currentfile.getName(),
-          currentfile.getLines(),
-          currentfile.getBlankLines(),
-          currentfile.getSpaces(),
-          currentfile.getWords(),
-          currentfile.getAvgCharsPerLine(),
-          currentfile.getAvgWordLength(),
-          mostCommonWord,
-          currentfile.getCreatedAt()
-        });
+        Object[] object = new Object[] {
+          currentfile.getCreatedAt(),
+          currentfile.getName()
+        };
+
+        for(int y = 0; y < tableHeaders.size(); y++){
+          object = tableHeaderSwitchCase(tableHeaders.get(y), object, currentfile);
+        }
+
+        model.addRow(object);
+
+      }
+    }
+
+    public Object[] tableHeaderSwitchCase(String word, Object[] object, FileAnalyzer currentfile){
+      String mostCommonWord = currentfile.getMostCommonWords().peek().getWord() + " : " + currentfile.getMostCommonWords().peek().getCount() + "x";
+      switch (word){
+        case Utility.lines:
+          return Utility.mergeObjectArrays(object, new Object[]{ currentfile.getLines() });
+        case Utility.blankLines:
+          return Utility.mergeObjectArrays(object, new Object[]{ currentfile.getBlankLines() });
+        case Utility.spaces:
+          return Utility.mergeObjectArrays(object, new Object[]{ currentfile.getSpaces() });
+        case Utility.words:
+          return Utility.mergeObjectArrays(object, new Object[]{ currentfile.getWords() });
+        case Utility.averageCharPerLine:
+          return Utility.mergeObjectArrays(object, new Object[]{ currentfile.getAvgCharsPerLine() });
+        case Utility.averageWordLength:
+          return Utility.mergeObjectArrays(object, new Object[]{ currentfile.getAvgWordLength() });
+        case Utility.mostCommonWord:
+          return Utility.mergeObjectArrays(object, new Object[]{ mostCommonWord });
+        default:
+          return object;
       }
     }
 }

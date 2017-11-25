@@ -59,25 +59,20 @@ class ChooseFilePanel extends JPanel implements ActionListener, ItemListener{
         numWordsCB.setSelected(true);
         numWordsCB.addItemListener(this);
 
-        aveCharCB = new JCheckBox("Number Of Words");
+        aveCharCB = new JCheckBox("Average Chars Per Line");
         aveCharCB.setMnemonic(KeyEvent.VK_C);
         aveCharCB.setSelected(true);
         aveCharCB.addItemListener(this);
 
-        aveWordCB = new JCheckBox("Average Chars Per Line");
+        aveWordCB = new JCheckBox("Average Word Length");
         aveWordCB.setMnemonic(KeyEvent.VK_C);
         aveWordCB.setSelected(true);
         aveWordCB.addItemListener(this);
 
-        comWordCB = new JCheckBox("Average Word Length");
+        comWordCB = new JCheckBox("Most Common Word");
         comWordCB.setMnemonic(KeyEvent.VK_C);
         comWordCB.setSelected(true);
         comWordCB.addItemListener(this);
-
-        button8 = new JCheckBox("Most Common Words");
-        button8.setMnemonic(KeyEvent.VK_C);
-        button8.setSelected(true);
-        button8.addItemListener(this);
 
         topPanel.add(descriptionLabel);
         middlePanel.add(fileLabel, BorderLayout.WEST);
@@ -91,7 +86,6 @@ class ChooseFilePanel extends JPanel implements ActionListener, ItemListener{
         bottomPanel.add(aveCharCB);
         bottomPanel.add(aveWordCB);
         bottomPanel.add(comWordCB);
-        bottomPanel.add(button8);
 
         add(topPanel, BorderLayout.NORTH);
         add(middlePanel, BorderLayout.CENTER);
@@ -159,39 +153,57 @@ class ChooseFilePanel extends JPanel implements ActionListener, ItemListener{
     public void itemStateChanged(ItemEvent e) {
         Object source = e.getItemSelectable();
 
+        // System.out.println("Item event ");
+        // System.out.println("Does source == numLinesCB " + String.valueOf(source == numLinesCB));
+
         if (e.getStateChange() == ItemEvent.SELECTED) {
             if (source == numLinesCB) {
             	Graphics.showNumLines = true;
+              Graphics.addHeader(Utility.lines);
             } else if (source == blankLinesCB) {
             	Graphics.showNumBlankLines = true;
+              Graphics.addHeader(Utility.blankLines);
             } else if (source == numSpacesCB) {
-                Graphics.showNumSpaces = true;
+              Graphics.showNumSpaces = true;
+              Graphics.addHeader(Utility.spaces);
             } else if (source == numWordsCB) {
-                Graphics.showNumWords = true;
+              Graphics.showNumWords = true;
+              Graphics.addHeader(Utility.words);
             }else if(source == aveCharCB){
             	Graphics.showAveChar = true;
+              Graphics.addHeader(Utility.averageCharPerLine);
             }else if(source == aveWordCB){
             	Graphics.showAveWord = true;
+              Graphics.addHeader(Utility.averageWordLength);
             }else if(source == comWordCB){
             	Graphics.showComWord = true;
+              Graphics.addHeader(Utility.mostCommonWord);
             }
         }
 
         if (e.getStateChange() == ItemEvent.DESELECTED) {
             if (source == numLinesCB) {
+              System.out.println("Removing header");
             	Graphics.showNumLines = false;
+              Graphics.removeHeader(Utility.lines);
             } else if (source == blankLinesCB) {
             	Graphics.showNumBlankLines = false;
+              Graphics.removeHeader(Utility.blankLines);
             } else if (source == numSpacesCB) {
               Graphics.showNumSpaces = false;
+              Graphics.removeHeader(Utility.spaces);
             } else if (source == numWordsCB) {
               Graphics.showNumWords = false;
+              Graphics.removeHeader(Utility.words);
             }else if(source == aveCharCB){
             	Graphics.showAveChar = false;
+              Graphics.removeHeader(Utility.averageCharPerLine);
             }else if(source == aveWordCB){
             	Graphics.showAveWord = false;
+              Graphics.removeHeader(Utility.averageWordLength);
             }else if(source == comWordCB){
             	Graphics.showComWord = false;
+              Graphics.removeHeader(Utility.mostCommonWord);
             }
         }
     }
