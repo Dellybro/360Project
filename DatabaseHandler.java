@@ -17,7 +17,8 @@ import java.text.*;
 
 public class DatabaseHandler{
 
-  public static String filename = "database.txt";
+  public static String filename = "file-analyzers.txt";
+  public static String wordTotalFileName = "word-totals.txt";
   public static String tempFilename = "databaseTemp.txt";
 
   /* This function will add FileAnalyzer to the database.txt */
@@ -45,6 +46,23 @@ public class DatabaseHandler{
       );
 
       fw.write(toInsert);
+      fw.close();
+
+
+      fw = new FileWriter(wordTotalFileName, true);
+      int index = 0;
+      for (WordTotal e : fileToWrite.getMostCommonWords()) {
+        toInsert = String.format("%s,%d,%s,%d%n",
+          uniqueIdentifier,
+          e.getCount(),
+          e.getWord(),
+          index
+        );
+        fw.write(toInsert);
+
+        index++;
+        // do something with e
+      }
       fw.close();
       return true;
   	} catch (IOException e) {
@@ -75,6 +93,7 @@ public class DatabaseHandler{
         String trimmedLine = currentLine.trim();
         writer.write(currentLine + System.getProperty("line.separator"));
       }
+
       writer.close();
       reader.close();
       return tempFile.renameTo(inputFile);
@@ -94,6 +113,8 @@ public class DatabaseHandler{
         String[] arrayOfStrings = line.split(",");
         if(arrayOfStrings[0].equals(uuid)){
           FileAnalyzer file = new FileAnalyzer(arrayOfStrings);
+          file.setMostCommonWords(DatabaseHandler.getWordTotals(file));
+          // loopThroughAndPrintMostCommonWords(file);
           return file;
         }
       }
@@ -116,6 +137,8 @@ public class DatabaseHandler{
         /**/
         String[] arrayOfStrings = line.split(",");
         FileAnalyzer currentFile = new FileAnalyzer(arrayOfStrings);
+        currentFile.setMostCommonWords(DatabaseHandler.getWordTotals(currentFile));
+        // loopThroughAndPrintMostCommonWords(currentFile);
         files.add(currentFile);
       }
 
@@ -126,4 +149,42 @@ public class DatabaseHandler{
       return null;
     }
   }
+
+  public static PriorityQueue<WordTotal> getWordTotals(FileAnalyzer file){
+    try {
+      PriorityQueue<WordTotal> wordTotals = new PriorityQueue<WordTotal>();
+
+
+
+      BufferedReader reader = new BufferedReader(new FileReader(wordTotalFileName));
+      String line;
+      while ((line = reader.readLine()) != null){
+        String[] arrayOfStrings = line.split(",");
+        if(arrayOfStrings[0].equals(file.getUUID())){
+          WordTotal total = new WordTotal(arrayOfStrings[2], Integer.parseInt(arrayOfStrings[1]));
+          wordTotals.offer(total);
+        }
+      }
+
+      return wordTotals;
+    } catch (IOException e) {
+      System.out.println("Error finding file, " + e);
+      /* Create file try again */
+      return null;
+    }
+  }
+
+  /* For resting purposes */
+  // public static void loopThroughAndPrintMostCommonWords(FileAnalyzer file){
+  //
+  //   System.out.println("Printing most common words ---- ");
+  //   for (WordTotal e : file.getMostCommonWords()) {
+  //
+  //     System.out.println(e.getWord());
+  //     System.out.println(e.getCount());
+  //     // do something with e
+  //   }
+  //   System.out.println("End printing most common words ---- ");
+  // }
+
 }

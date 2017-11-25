@@ -1,0 +1,2 @@
+7cc77a19-1e3b-4a76-a8b4-5816715ca344,test.txt,1,0,194,197,4,1188,/Users/Dellybro/Desktop/school/360/deliverableOne/test.txt,2017/11/24 17:09:26
+b849e952-8b07-4eb7-9e00-62a6d6e23313,testcase1.txt,11,5,23,29,4,14,/Users/Dellybro/Desktop/school/360/deliverableOne/testcase1.txt,2017/11/24 17:19:27
