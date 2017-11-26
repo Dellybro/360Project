@@ -1,20 +1,20 @@
 
 
-public class WordTotal implements Comparable<WordTotal>{//Used to hold the word with number of timed it appeared in the file
-		
+public class WordTotal implements Comparable<WordTotal>{//Used to hold the word with number of times it appeared in the file
+
 		private String word;
-		
+
 		private int wordCount;
-		
+
 		public WordTotal(String s, int c){
 			word = s;
 			wordCount = c;
 		}
-		
+
 		public String getWord(){
 			return word;
 		}
-		
+
 		public int getCount(){
 			return wordCount;
 		}

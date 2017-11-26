@@ -50,6 +50,7 @@ class AveragesPanel extends JPanel {
 
   }
 
+  //populate the table with the relevant information
   public void setAverages(ArrayList<FileAnalyzer> fileList){
     int avgLines = 0, avgBlankLines = 0, avgSpaces = 0, avgWords = 0, avgCharsPerLine = 0, avgWordLength = 0;
 
