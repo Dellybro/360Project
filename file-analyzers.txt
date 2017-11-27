@@ -18,3 +18,7 @@ f6e6a234-9c97-4fbd-87b0-f9c7fc4b113f,testcase1.txt,11,5,23,29,4,14,/Users/Dellyb
 ffd63461-3433-483c-a2b6-12a2ec6333ef,testcase1.txt,11,5,23,29,4,14,/Users/Dellybro/Desktop/school/360/deliverableOne/testcase1.txt,2017/11/24 18:39:59
 9259fe7d-c0fa-4cfa-a2e5-b44ec03ee92f,testcase1.txt,11,5,23,29,4,14,/Users/Dellybro/Desktop/school/360/deliverableOne/testcase1.txt,2017/11/24 18:40:13
 6068fa2d-37bb-4f99-998b-8c07b2e84b4f,testcase1.txt,11,5,23,29,4,14,/Users/Dellybro/Desktop/school/360/deliverableOne/testcase1.txt,2017/11/24 18:40:16
+e59aff80-8a1d-4ee1-a8cd-7ac56bf9b548,fileIOtest.txt,7,2,7,10,5,9,C:\Users\Bq239\Documents\GitHub\360Project\fileIOtest.txt,2017/11/26 21:28:21
+692d8c21-f4f3-466c-b53e-339cdedece06,fileIOtest.txt,7,2,7,10,5,9,C:\Users\Bq239\Documents\GitHub\360Project\fileIOtest.txt,2017/11/26 21:28:25
+4cba2e43-f9a2-409e-861a-bd706d0e6175,fileIOtest.txt,7,2,7,10,5,9,C:\Users\Bq239\Documents\GitHub\360Project\fileIOtest.txt,2017/11/26 21:28:55
+f0278631-903f-4f5c-b3da-94ad21061db1,testcase1.txt,11,5,23,29,4,14,C:\Users\Bq239\Documents\GitHub\360Project\testcase1.txt,2017/11/26 21:29:23
