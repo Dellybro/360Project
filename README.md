@@ -54,10 +54,10 @@ This will run than run program! Continue below to see example usages.
 
 ## Example Usages
 
-Multiple file upload allowed at the same time.
+Multiple file upload allowed at the same time. As well as chose what stats you would like to be shown.
 ![Alt text](usecase1.png?raw=true "Title")
 <br />
 <br />
 <br />
-Analysis of Averages + and invalid file name
+Analysis of Averages with only stats you would like to be shown.
 ![Alt text](usecase2.png?raw=true "Title")
