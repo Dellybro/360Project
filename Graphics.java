@@ -62,14 +62,14 @@ public class Graphics {
       tabPanel.addTab("Help", new HelpPanel());
 
       frame.getContentPane().add(tabPanel);
-      frame.setSize(600, 250);
+      frame.setSize(700, 250);
       frame.setVisible(true);
 
 
       tabPanel.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
           if(tabPanel.getSelectedIndex() == 0){
-            frame.setSize(600, 250);
+            frame.setSize(700, 250);
           } else if(tabPanel.getSelectedIndex() == 1){
             frame.setSize(600, 250);
           }else if(tabPanel.getSelectedIndex() == 2){
